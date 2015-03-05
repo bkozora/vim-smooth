@@ -4,6 +4,26 @@ set nocompatible
 set viminfo='1000,f1,:1000,/1000
 set history=1000
 
+"------  Persistant Undo ------
+
+" Put plugins and dictionaries in this dir (also on Windows)
+let vimDir = '$HOME/.vim'
+let &runtimepath.=','.vimDir
+
+" Keep undo history across sessions by storing it in a file
+if has('persistent_undo')
+    let myUndoDir = expand(vimDir . '/undo')
+    " Create dirs
+    call system('mkdir ' . vimDir)
+    call system('mkdir ' . myUndoDir)
+    let &undodir = myUndoDir
+    set undofile
+	set undolevels=1000         " How many undos
+	set undoreload=10000        " number of lines to save for undo
+endif
+
+" -----  Git Gutter  -----
+map <Leader>g :GitGutterToggle
 
 "------  Visual Options  ------
 syntax on
